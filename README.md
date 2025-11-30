@@ -119,3 +119,4 @@ python train.py \
   --image_size 256 \
   --transform_mode designed_transform
 ```
+You can run ```tensorboard --logdir=results/tensorboard``` to supervise the training process.
