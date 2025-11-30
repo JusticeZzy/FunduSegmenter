@@ -22,11 +22,17 @@ cd FunduSegmenter
 pip install -r requirements.txt
 ```
 ### 2. Download
-Download RETFound pre-trained weights 'RETFound_mae_natureCFP.pth' from [RETFound](https://github.com/rmaphoh/RETFound), and save it in FunduSegmenter.
+Download RETFound pre-trained weights ```RETFound_mae_natureCFP.pth``` from [RETFound](https://github.com/rmaphoh/RETFound), and save it in ```FunduSegmenter```.
 
-Download Datasets [IDRID](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2015/Arunava2015AComprehensive.pdf), [RIM-ONE-r3](https://ieeexplore.ieee.org/abstract/document/5999143?casa_token=R9T_bTVvDoMAAAAA:r2ipTjpfnGSzeUuqMIHDOrxI_T3XEeG67yP_cWiiwD2c9Xsom2CTBSLZXVswBow7BRDI_95VOt3cYw), and [REFUGE](https://www.sciencedirect.com/science/article/abs/pii/S1361841519301100?casa_token=H1RvPw0rvRgAAAAA:XqD9RTnnyZ8dOg8Z9Wo54s16LRP-nxhfmhotHMMEugyYtt5hYQhHHcHkA18b0OnOhO7iSgJ2kmo).
+Download Datasets [IDRID](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](https://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2015/Arunava2015AComprehensive.pdf), [RIM-ONE-r3](https://ieeexplore.ieee.org/abstract/document/5999143?casa_token=R9T_bTVvDoMAAAAA:r2ipTjpfnGSzeUuqMIHDOrxI_T3XEeG67yP_cWiiwD2c9Xsom2CTBSLZXVswBow7BRDI_95VOt3cYw), and [REFUGE](https://www.sciencedirect.com/science/article/abs/pii/S1361841519301100?casa_token=H1RvPw0rvRgAAAAA:XqD9RTnnyZ8dOg8Z9Wo54s16LRP-nxhfmhotHMMEugyYtt5hYQhHHcHkA18b0OnOhO7iSgJ2kmo).
 
-### 3. Datasets preparation
+(Optional) Directly download the processed datasets from [here]() and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+### (Optional) 3. Datasets preparation
+Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets.
+
+#### 3.1. Format preparation
+
 Process the Drishti-GS and RIM-ONE-r3 mask format to the REFUGE mask format by running ```prepare_Drishti_GS.ipynb``` and ```prepare_RIM_ONE_r3.ipynb``` in ```offline_datasets_prepare```.
 
 Example visualization:
@@ -81,4 +87,18 @@ Example visualization:
 </table>
 </div>
 
-### 4. Pre-processing
+#### 3.2. OD centre cropping
+Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/abs/pii/S0169260721000444?casa_token=19OZFuiKaQsAAAAA:3qza9yDwFd8qhnzq_73CReq3HQ5rjWV6Xv5f_6MNsBJceS_72dyjsg_pXieKBss2iLLuWl7qQJg) weight from [here]()xxxxxxxxxxxxxxxxxxxxxxxxxxx. We pre-trained it on Drishti-GS, RIM-ONE-r3, REFUGE training and REFUGE validation. DUNet is one of the baseline models. You can train your own weight by following the step 4. Also, you can use any other reliable pre-trained weights to apply OD centre cropping pre-processing.
+
+Run ```OD_centrecrop.ipynb``` in ```offline_datasets_prepare``` to apply OD centre cropping pre-processing by the pre-trained DUNet.
+
+(Optional) You can test the Dice score of the pre-trained DUNet on your datasets if your datasets contain OD ground truth. Run the following code:
+```
+python test_OD_centrecrop.py \
+--test_image_path (your own image dir) \
+--test_mask_path (your own mask dir) \
+--checkpoint_path ./DUNet_OD_centreCrop_pretrained.pth \
+--label_n_cls 3 #Important! 2 for OD only masks or 3 for OD/OC masks.
+```
+
+### 4. Train
