@@ -8,7 +8,7 @@
 
 
 
-
+Our code was verified on a single NVIDIA GeForce RTX 5090 GPU and AMD Ryzen 9 9950X CPU.
 ### 1. Installation
 Create environment
 ```
@@ -46,11 +46,11 @@ Example visualization:
     </td>
     <td align="center">
       <img width="205" height="175" alt="drishtiGS_002_ODsegSoftmap" src="https://github.com/user-attachments/assets/fd1464d7-aae3-43a3-9408-5e53715ff438" /><br>
-      Original OD mask
+      OD mask
     </td>
     <td align="center">
       <img width="205" height="175" alt="drishtiGS_002_cupsegSoftmap" src="https://github.com/user-attachments/assets/90005290-d821-4c7b-97be-fb81e8706de0" /><br>
-      Original OC mask
+      OC mask
     </td>
     <td align="center">
       <img width="205" height="175" alt="new_mask_drishtiGS_002" src="https://github.com/user-attachments/assets/6f67272e-84b7-41e0-88e6-1d5969eb93ad" /><br>
@@ -65,19 +65,19 @@ Example visualization:
   <tr>
     <td align="center">
       <img width="214" height="142" alt="image_G-1-L" src="https://github.com/user-attachments/assets/d226035b-978a-4442-946d-cadd38eeede0" /><br>
-      RIM-ONE-r3 original image
+      RIM-ONE-r3 image
     </td>
     <td align="center">
       <img width="107" height="142" alt="new_G-1-L" src="https://github.com/user-attachments/assets/bbcb08be-07e3-4910-a510-867402e232b8" /><br>
-      new image
+      New image     
     </td>
     <td align="center">
       <img width="214" height="142" alt="G-1-L-Disc-Avg" src="https://github.com/user-attachments/assets/be13e5fa-d7c7-409c-876b-d34dddef8ee8" /><br>
-   Original OD mask
+      OD mask
     </td>
     <td align="center">
       <img width="214" height="142" alt="G-1-L-Cup-Avg" src="https://github.com/user-attachments/assets/7b1540d7-e05e-4749-8125-185f1a613073" /><br>
-      Original OC mask
+      OC mask
     </td>
     <td align="center">
       <img width="107" height="142" alt="G-1-L" src="https://github.com/user-attachments/assets/453fb957-9509-4f4d-b53e-6c2698e0d9aa" /><br>
@@ -119,4 +119,4 @@ python train.py \
   --image_size 256 \
   --transform_mode designed_transform
 ```
-You can run ```tensorboard --logdir=results/tensorboard``` to supervise the training process.
+You can run ```tensorboard --logdir=results/tensorboard``` to supervise the training progress.
