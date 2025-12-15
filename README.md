@@ -28,7 +28,7 @@ Download datasets [IDRID](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](h
 
 (Optional) You can directly download the processed datasets from [here]() and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-### (Optional) 3. Dataset preparation
+### 3. Dataset preparation
 Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets.
 
 #### 3.1. Format preparation
@@ -110,13 +110,41 @@ python train.py \
   --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation) \
   --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks. You can set output_channel 2 and label_n_cls 3 to train OD only model if groundtruth contains OD/OC like REFUGE.) \
   --seed 112316 \
-  --train_image_path (your own training image dir) \
-  --train_mask_path (your own training mask dir) \
+  --train_image_path (your own training ROI of images dir) \
+  --train_mask_path (your own training ROI of masks dir) \
   --separate_val (1 for separate validation dataset like REFUGE (training/validation/testing), 0 for training/testing only datasets) \
-  --val_image_path (your own validation image dir, can be ignored if separate_val 0) \
-  --val_mask_path (your own validation mask dir, can be ignored if separate_val 0) \
+  --val_image_path (your own validation ROI of images dir, can be ignored if separate_val 0) \
+  --val_mask_path (your own validation ROI of masks dir, can be ignored if separate_val 0) \
   --num_workers 4 \
   --image_size 256 \
   --transform_mode designed_transform
 ```
 You can run ```tensorboard --logdir=results/tensorboard``` to supervise the training progress.
+
+### 5. Test
+Run the following code to produce results if reconstructing original size:
+```
+python test.py  \
+  --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks) \
+  --test_image_path (your own testing ROI of images dir) \
+  --test_original_mask_path (your own original testing mask dir) \
+  --test_cropped_mask_path (your own testing ROI of masks dir) \
+  --centre_file_path (your own centre file path, produced in step 3.2) \
+  --image_size 256 \
+  --model_selection FunduSegmenter \
+  --checkpoint_path ./results/saved_weights/best_weights.pth \
+  --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation)
+```
+Run the following code to produce results if keeping ROIs (domain generalization task):
+```
+python test_domain.py  \
+  --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks) \
+  --test_image_path (your own testing ROI of images dir) \
+  --test_mask_path (your own testing ROI of masks dir) \
+  --image_size 256 \
+  --checkpoint_path ./results/saved_weights/best_weights.pth \
+  --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation)
+```
+The output segmentation maps are saved in ```./results/segmentation_map```.
+### 6. Evaluation only
+If you would like to use our trained-weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx
