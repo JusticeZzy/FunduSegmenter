@@ -9,6 +9,8 @@
 
 
 Our code was verified on a single NVIDIA GeForce RTX 5090 GPU and AMD Ryzen 9 9950X CPU.
+
+---
 ### 1. Installation
 Create environment
 ```
@@ -21,13 +23,18 @@ git clone https://github.com/JusticeZzy/FunduSegmenter
 cd FunduSegmenter
 pip install -r requirements.txt
 ```
+
+---
 ### 2. Download
 Download RETFound pre-trained weights ```RETFound_mae_natureCFP.pth``` from [RETFound](https://github.com/rmaphoh/RETFound), and save it in ```FunduSegmenter```.
 
-Download datasets [IDRID](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](https://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2015/Arunava2015AComprehensive.pdf), [RIM-ONE-r3](https://ieeexplore.ieee.org/abstract/document/5999143?casa_token=R9T_bTVvDoMAAAAA:r2ipTjpfnGSzeUuqMIHDOrxI_T3XEeG67yP_cWiiwD2c9Xsom2CTBSLZXVswBow7BRDI_95VOt3cYw), and [REFUGE](https://www.sciencedirect.com/science/article/abs/pii/S1361841519301100?casa_token=H1RvPw0rvRgAAAAA:XqD9RTnnyZ8dOg8Z9Wo54s16LRP-nxhfmhotHMMEugyYtt5hYQhHHcHkA18b0OnOhO7iSgJ2kmo).
+Download datasets [IDRiD](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](https://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2015/Arunava2015AComprehensive.pdf), [RIM-ONE-r3](https://ieeexplore.ieee.org/abstract/document/5999143?casa_token=R9T_bTVvDoMAAAAA:r2ipTjpfnGSzeUuqMIHDOrxI_T3XEeG67yP_cWiiwD2c9Xsom2CTBSLZXVswBow7BRDI_95VOt3cYw), and [REFUGE](https://www.sciencedirect.com/science/article/abs/pii/S1361841519301100?casa_token=H1RvPw0rvRgAAAAA:XqD9RTnnyZ8dOg8Z9Wo54s16LRP-nxhfmhotHMMEugyYtt5hYQhHHcHkA18b0OnOhO7iSgJ2kmo).
 
-(Optional) You can directly download the processed datasets from [here]() and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+You can directly download the processed datasets from [here](https://pan.baidu.com/s/1GeKRLcTy8klrymORCu5amw?pwd=y5uw) and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)
 
+Our processed domain datasets for domain generalization baselines are in ```./domain_datasets/baseline_set```, for our models are in ```./domain_datasets/FunduSegmenter_set```.
+
+---
 ### 3. Dataset preparation
 Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets.
 
@@ -92,7 +99,7 @@ Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/a
 
 Run ```OD_centrecrop.ipynb``` in ```offline_datasets_prepare``` to apply OD centre cropping pre-processing by the pre-trained DUNet.
 
-(Optional) You can test the Dice score of the pre-trained DUNet on your datasets if they contain OD groundtruth. Run the following code:
+(Optional) You can test the Dice score of the pre-trained DUNet on your datasets if they contain OD ground truth. Run the following code:
 ```
 python test_OD_centrecrop.py \
   --test_image_path (your own image dir) \
@@ -101,6 +108,7 @@ python test_OD_centrecrop.py \
   --label_n_cls 3    # Important! 2 for OD only masks or 3 for OD/OC masks.
 ```
 
+---
 ### 4. Train
 Run the following code to train our ```FunduSegmenter```. Set model_selection to ```baseline_RETFoundSegmenter```, ```baseline_DUNet```, ```baseline_TransUNet``` to train baselines (RETFoundSegmenter, DUNet, [TransUNet](https://github.com/Beckschen/TransUNet)) respectively. Note that we only copy the model architecture of TransUNet, and train it under our experimental pipeline. If you would like to reproduce results by running official code, click [here](https://github.com/Beckschen/TransUNet).
 ```
@@ -121,8 +129,9 @@ python train.py \
 ```
 You can run ```tensorboard --logdir=results/tensorboard``` to supervise the training progress.
 
+---
 ### 5. Test
-Run the following code to produce results if reconstructing original size:
+Run the following code to produce results if reconstructing maps from cropped ROIs to original size:
 ```
 python test.py  \
   --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks) \
@@ -134,10 +143,11 @@ python test.py  \
   --model_selection FunduSegmenter \
   --checkpoint_path ./results/saved_weights/best_weights.pth \
   --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation)
+  --is_idrid    # Important! Disable for other datasets, or enable for IDRiD, since IDRiD was cropped 1200×1200 ROIs.
 ```
-Run the following code to produce results if keeping ROIs (domain generalization task):
+Run the following code to produce results if directly reconstructing maps (domain generalization task or training with original images):
 ```
-python test_domain.py  \
+python test_nocrop.py  \
   --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks) \
   --test_image_path (your own testing ROI of images dir) \
   --test_mask_path (your own testing ROI of masks dir) \
@@ -147,9 +157,13 @@ python test_domain.py  \
 ```
 The output segmentation maps are saved in ```./results/segmentation_map```.
 
+---
 ### 6. Evaluation only
-If you would like to use our trained-weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx
+If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
 
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images and follow the step 5 to produce segmentation maps. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
+
+---
 ### 7. Baselines
 #### 7.1. DUNet and TransUNet
 
@@ -165,13 +179,57 @@ There are some necessary changes.
 2. In ```line 45``` of ```./dataloaders/fundus_dataloader.py```, replace ```SEED = 1212``` with ```SEED = 112316```.
 
 3. In ```line 78``` of ```./train.py```, replace ```torch.cuda.manual_seed(1337)``` with
-```
-import random
-import numpy as np
-random.seed(112316)
-np.random.seed(112316)  
-torch.manual_seed(112316)
-torch.cuda.manual_seed_all(112316)
-```
+   ```
+   import random
+   import numpy as np
+   random.seed(112316)
+   np.random.seed(112316)  
+   torch.manual_seed(112316)
+   torch.cuda.manual_seed_all(112316)
+   ```
 
 4. (Important!) The MobileNet part of DoFE load a pre-trained weight. However, the link of the weight is invalid. You need to download the same pre-trained weight from [here]() (xxxxxxxxxxxxxxxxxxxx) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
+
+#### 7.4. RAM-DSIR
+You can implement RAM-DSIR by following the official [repository](https://github.com/zzzqzhou/RAM-DSIR).
+
+There are some necessary changes.
+
+1. If you use our processed datasets, you need to replace the dataset list files with ours in ```./baselines_requirements/RAM-DSIR```. Ignore if not.
+
+2. In ```./code/dataset/fundus.py```, replace the following
+   ```
+   line 78     with open(os.path.join(self.base_dir, self.domain_name[self.domain_idx], 'test.list'), 'r') as f:
+   line 93     img = Image.open(os.path.join(self.base_dir, cur_domain_name, id.split(' ')[0]))
+   line 97     mask = Image.open(os.path.join(self.base_dir, cur_domain_name, id.split(' ')[1])).convert('L')
+   line 206    with open(os.path.join(self.base_dir, other_domain_name, 'train.list'), 'r') as f:
+   line 208    other_id = np.random.choice(other_id_path).replace('\n', '').split(' ')[0]
+   ```
+   with
+   ```
+   line 78     with open(os.path.join(self.base_dir, self.domain_name[self.domain_idx]+'_test.list'), 'r') as f:
+   line 93     img = Image.open(os.path.join(self.base_dir, cur_domain_name, id.split(' ')[0][8:]))
+   line 97     mask = Image.open(os.path.join(self.base_dir, cur_domain_name, id.split(' ')[1][8:])).convert('L')
+   line 206    with open(os.path.join(self.base_dir, other_domain_name+'_train.list'), 'r') as f:
+   line 208    other_id = np.random.choice(other_id_path).replace('\n', '').split(' ')[0][8:]
+   ```
+3. In ```line 60``` of ```./code/train.py```, replace ```parser.add_argument('--seed', type=int,  default=1337, help='random seed')``` with ```parser.add_argument('--seed', type=int,  default=112316, help='random seed')```.
+
+#### 7.5. TVConv
+You can implement TVConv by following the official [repository](https://github.com/JierunChen/TVConv).
+
+There are some necessary changes.
+
+1. If you use our processed datasets, you need to replace ```self.flags_DGS = ['gd', 'nd']``` with ```self.flags_DGS = ['dr']``` in ```line 40``` of ```./od_oc_segmentation/dataloaders/fundus_dataloader.py```. Ignore if not.
+
+2. In ```line 45``` of ```./od_oc_segmentation/dataloaders/fundus_dataloader.py```, replace ```SEED = 1212``` with ```SEED = 112316```.
+
+3. In ```line 41``` of ```./od_oc_segmentation/odoc_train_test.py```, replace ```torch.cuda.manual_seed(1337)``` with
+   ```
+   import random
+   import numpy as np
+   random.seed(112316)
+   np.random.seed(112316)  
+   torch.manual_seed(112316)
+   torch.cuda.manual_seed_all(112316)
+   ```
