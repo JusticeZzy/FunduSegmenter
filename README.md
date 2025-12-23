@@ -161,7 +161,7 @@ The output segmentation maps are saved in ```./results/segmentation_map```.
 ### 6. Evaluation only
 If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
 
-We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images and follow the step 5 to produce segmentation maps. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the mask format) and follow the step 5 to produce segmentation maps. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
 
 ---
 ### 7. Baselines
