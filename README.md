@@ -147,7 +147,7 @@ python test.py  \
 ```
 Run the following code to produce results if directly reconstructing maps (domain generalization task or training with original images):
 ```
-python test_nocrop.py  \
+python test_nopadding.py  \
   --label_n_cls (2 for OD only ground truth, 3 for OD/OC ground truth) \
   --test_image_path (your own testing ROI of images dir) \
   --test_mask_path (your own testing ROI of ground truth dir) \
