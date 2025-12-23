@@ -40,7 +40,7 @@ Follow this step if you would like to use your own datasets. You may need to mod
 
 #### 3.1. Format preparation
 
-Convert the Drishti-GS and RIM-ONE-r3 mask format to the REFUGE mask format by running ```prepare_Drishti_GS.ipynb``` and ```prepare_RIM_ONE_r3.ipynb``` in ```offline_datasets_prepare```.
+Convert the Drishti-GS and RIM-ONE-r3 ground truth format to the REFUGE ground truth format by running ```prepare_Drishti_GS.ipynb``` and ```prepare_RIM_ONE_r3.ipynb``` in ```offline_datasets_prepare```.
 
 Example visualization:
 
@@ -53,15 +53,15 @@ Example visualization:
     </td>
     <td align="center">
       <img width="205" height="175" alt="drishtiGS_002_ODsegSoftmap" src="https://github.com/user-attachments/assets/fd1464d7-aae3-43a3-9408-5e53715ff438" /><br>
-      OD mask
+      OD ground truth
     </td>
     <td align="center">
       <img width="205" height="175" alt="drishtiGS_002_cupsegSoftmap" src="https://github.com/user-attachments/assets/90005290-d821-4c7b-97be-fb81e8706de0" /><br>
-      OC mask
+      OC ground truth
     </td>
     <td align="center">
       <img width="205" height="175" alt="new_mask_drishtiGS_002" src="https://github.com/user-attachments/assets/6f67272e-84b7-41e0-88e6-1d5969eb93ad" /><br>
-      New mask
+      New ground truth
     </td>
   </tr>
 </table>
@@ -80,15 +80,15 @@ Example visualization:
     </td>
     <td align="center">
       <img width="214" height="142" alt="G-1-L-Disc-Avg" src="https://github.com/user-attachments/assets/be13e5fa-d7c7-409c-876b-d34dddef8ee8" /><br>
-      OD mask
+      OD ground truth
     </td>
     <td align="center">
       <img width="214" height="142" alt="G-1-L-Cup-Avg" src="https://github.com/user-attachments/assets/7b1540d7-e05e-4749-8125-185f1a613073" /><br>
-      OC mask
+      OC ground truth
     </td>
     <td align="center">
       <img width="107" height="142" alt="G-1-L" src="https://github.com/user-attachments/assets/453fb957-9509-4f4d-b53e-6c2698e0d9aa" /><br>
-      New mask
+      New ground truth
     </td>
   </tr>
 </table>
@@ -103,9 +103,9 @@ Run ```OD_centrecrop.ipynb``` in ```offline_datasets_prepare``` to apply OD cent
 ```
 python test_OD_centrecrop.py \
   --test_image_path (your own image dir) \
-  --test_mask_path (your own mask dir) \
+  --test_mask_path (your own ground truth dir) \
   --checkpoint_path ./DUNet_OD_centreCrop_pretrained.pth \
-  --label_n_cls 3    # Important! 2 for OD only masks or 3 for OD/OC masks.
+  --label_n_cls 3    # Important! 2 for OD only ground truth or 3 for OD/OC ground truth.
 ```
 
 ---
@@ -116,13 +116,13 @@ python train.py \
   --epochs 10000 \
   --model_selection FunduSegmenter \
   --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation) \
-  --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks. You can set output_channel 2 and label_n_cls 3 to train OD only model if groundtruth contains OD/OC like REFUGE.) \
+  --label_n_cls (2 for OD only ground truth, 3 for OD/OC ground truth. You can set output_channel 2 and label_n_cls 3 to train OD only model if groundtruth contains OD/OC like REFUGE.) \
   --seed 112316 \
   --train_image_path (your own training ROI of images dir) \
-  --train_mask_path (your own training ROI of masks dir) \
+  --train_mask_path (your own training ROI of ground truth dir) \
   --separate_val (1 for separate validation dataset like REFUGE (training/validation/testing), 0 for training/testing only datasets) \
   --val_image_path (your own validation ROI of images dir, can be ignored if separate_val 0) \
-  --val_mask_path (your own validation ROI of masks dir, can be ignored if separate_val 0) \
+  --val_mask_path (your own validation ROI of ground truth dir, can be ignored if separate_val 0) \
   --num_workers 4 \
   --image_size 256 \
   --transform_mode designed_transform
@@ -134,10 +134,10 @@ You can run ```tensorboard --logdir=results/tensorboard``` to supervise the trai
 Run the following code to produce results if reconstructing maps from cropped ROIs to original size:
 ```
 python test.py  \
-  --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks) \
+  --label_n_cls (2 for OD only ground truth, 3 for OD/OC ground truth) \
   --test_image_path (your own testing ROI of images dir) \
-  --test_original_mask_path (your own original testing mask dir) \
-  --test_cropped_mask_path (your own testing ROI of masks dir) \
+  --test_original_mask_path (your own original testing ground truth dir) \
+  --test_cropped_mask_path (your own testing ROI of ground truth dir) \
   --centre_file_path (your own centre file path, produced in step 3.2) \
   --image_size 256 \
   --model_selection FunduSegmenter \
@@ -148,9 +148,9 @@ python test.py  \
 Run the following code to produce results if directly reconstructing maps (domain generalization task or training with original images):
 ```
 python test_nocrop.py  \
-  --label_n_cls (2 for OD only groundtruth, 3 for OD/OC masks) \
+  --label_n_cls (2 for OD only ground truth, 3 for OD/OC ground truth) \
   --test_image_path (your own testing ROI of images dir) \
-  --test_mask_path (your own testing ROI of masks dir) \
+  --test_mask_path (your own testing ROI of ground truth dir) \
   --image_size 256 \
   --checkpoint_path ./results/saved_weights/best_weights.pth \
   --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation)
@@ -161,7 +161,7 @@ The output segmentation maps are saved in ```./results/segmentation_map```.
 ### 6. Evaluation only
 If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
 
-We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the mask format) and follow the step 5 to produce segmentation maps. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 to produce segmentation maps. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
 
 ---
 ### 7. Baselines
