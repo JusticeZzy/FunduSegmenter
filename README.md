@@ -233,3 +233,13 @@ There are some necessary changes.
    torch.manual_seed(112316)
    torch.cuda.manual_seed_all(112316)
    ```
+
+---
+### 8. Acknowledgments
+Our work is benefited from [RETFound](https://github.com/rmaphoh/RETFound) and [Segmenter](https://github.com/rstrudel/segmenter). Thanks for their great work!
+
+---
+### 9. Citation
+If you find that our work is useful for your research, please consider citing
+```
+```
