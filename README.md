@@ -30,7 +30,7 @@ Download RETFound pre-trained weights ```RETFound_mae_natureCFP.pth``` from [RET
 
 Download datasets [IDRiD](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](https://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2015/Arunava2015AComprehensive.pdf), [RIM-ONE-r3](https://ieeexplore.ieee.org/abstract/document/5999143?casa_token=R9T_bTVvDoMAAAAA:r2ipTjpfnGSzeUuqMIHDOrxI_T3XEeG67yP_cWiiwD2c9Xsom2CTBSLZXVswBow7BRDI_95VOt3cYw), and [REFUGE](https://www.sciencedirect.com/science/article/abs/pii/S1361841519301100?casa_token=H1RvPw0rvRgAAAAA:XqD9RTnnyZ8dOg8Z9Wo54s16LRP-nxhfmhotHMMEugyYtt5hYQhHHcHkA18b0OnOhO7iSgJ2kmo).
 
-You can directly download the processed datasets from [here](https://pan.baidu.com/s/1GeKRLcTy8klrymORCu5amw?pwd=y5uw) and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)
+You can directly download the processed datasets from [here](https://pan.baidu.com/s/1Ca-0xXSBW38BL6Oc96EbvA?pwd=buwr) and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)
 
 Our processed domain datasets for domain generalization baselines are in ```./domain_datasets/baseline_set```, for our models are in ```./domain_datasets/FunduSegmenter_set```.
 
@@ -163,7 +163,7 @@ If you would like to use our trained weight to produce segmentation maps, you ca
 
 We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weight is available [here](https://pan.baidu.com/s/1yNUSu9qD9qRoTUV7Z_zUuw?pwd=q8s8). Note that the performance of this weight is not widely verificated, so it could be unstable.
 
-Additionally, all the weights trained and reported in our paper are available [here](https://pan.baidu.com/s/1eqmo4ZS9673X4s2RCaTbsw?pwd=sbpw).
+Additionally, all the weights trained and reported in our paper are available [here](https://pan.baidu.com/s/1uyjrC_j-Gk5IYsU0hA7hmg?pwd=nwny).
 
 ---
 ## 7. Baselines
