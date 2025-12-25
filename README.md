@@ -11,7 +11,7 @@
 Our code was verified on a single NVIDIA GeForce RTX 5090 GPU and AMD Ryzen 9 9950X CPU.
 
 ---
-### 1. Installation
+## 1. Installation
 Create environment
 ```
 conda create -n fundusegmenter python=3.11.0 -y
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ```
 
 ---
-### 2. Download
+## 2. Download
 Download RETFound pre-trained weights ```RETFound_mae_natureCFP.pth``` from [RETFound](https://github.com/rmaphoh/RETFound), and save it in ```FunduSegmenter```.
 
 Download datasets [IDRiD](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](https://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2015/Arunava2015AComprehensive.pdf), [RIM-ONE-r3](https://ieeexplore.ieee.org/abstract/document/5999143?casa_token=R9T_bTVvDoMAAAAA:r2ipTjpfnGSzeUuqMIHDOrxI_T3XEeG67yP_cWiiwD2c9Xsom2CTBSLZXVswBow7BRDI_95VOt3cYw), and [REFUGE](https://www.sciencedirect.com/science/article/abs/pii/S1361841519301100?casa_token=H1RvPw0rvRgAAAAA:XqD9RTnnyZ8dOg8Z9Wo54s16LRP-nxhfmhotHMMEugyYtt5hYQhHHcHkA18b0OnOhO7iSgJ2kmo).
@@ -35,7 +35,7 @@ You can directly download the processed datasets from [here](https://pan.baidu.c
 Our processed domain datasets for domain generalization baselines are in ```./domain_datasets/baseline_set```, for our models are in ```./domain_datasets/FunduSegmenter_set```.
 
 ---
-### 3. Dataset preparation
+## 3. Dataset preparation
 Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets.
 
 #### 3.1. Format preparation
@@ -109,7 +109,7 @@ python test_OD_centrecrop.py \
 ```
 
 ---
-### 4. Train
+## 4. Train
 Run the following code to train our ```FunduSegmenter```. Set ```--model_selection``` to ```baseline_RETFoundSegmenter```, ```baseline_DUNet```, ```baseline_TransUNet``` to train baselines (RETFoundSegmenter, DUNet, [TransUNet](https://github.com/Beckschen/TransUNet)) respectively. Note that we only copy the model architecture of TransUNet, and train it under our experimental pipeline. If you would like to reproduce results by running official code, click [here](https://github.com/Beckschen/TransUNet).
 ```
 python train.py \
@@ -130,7 +130,7 @@ python train.py \
 You can run ```tensorboard --logdir=results/tensorboard``` to supervise the training progress.
 
 ---
-### 5. Test
+## 5. Test
 Run the following code to produce results if reconstructing maps from cropped ROIs to original size:
 ```
 python test.py  \
@@ -158,15 +158,15 @@ python test_nopadding.py  \
 The output segmentation maps are saved in ```./results/segmentation_map```.
 
 ---
-### 6. Evaluation only
-If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run test.py) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](https://pan.baidu.com/s/1-IcmzTP_i1gFqbYp4LPIeQ?pwd=r3ej).
+## 6. Evaluation only
+If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run ```test.py```) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](https://pan.baidu.com/s/1-IcmzTP_i1gFqbYp4LPIeQ?pwd=r3ej).
 
-We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run test_nopadding.py) to produce segmentation maps. The weight is available [here](https://pan.baidu.com/s/1yNUSu9qD9qRoTUV7Z_zUuw?pwd=q8s8). Note that the performance of this weight is not widely verificated, so it could be unstable.
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weight is available [here](https://pan.baidu.com/s/1yNUSu9qD9qRoTUV7Z_zUuw?pwd=q8s8). Note that the performance of this weight is not widely verificated, so it could be unstable.
 
 Additionally, all the weights trained and reported in our paper are available [here](https://pan.baidu.com/s/1eqmo4ZS9673X4s2RCaTbsw?pwd=sbpw).
 
 ---
-### 7. Baselines
+## 7. Baselines
 #### 7.1. DUNet and TransUNet
 You can implement DUNet and TransUNet by setting ```--model_selection``` to ```baseline_DUNet``` and ```baseline_TransUNet``` through ```train.py```. The official repository of TransUNet is [here](https://github.com/Beckschen/TransUNet).
 
@@ -254,11 +254,11 @@ There are some necessary changes.
    ```
 
 ---
-### 8. Acknowledgments
+## 8. Acknowledgments
 Our work is benefited from [RETFound](https://github.com/rmaphoh/RETFound) and [Segmenter](https://github.com/rstrudel/segmenter). Thanks for their great work!
 
 ---
-### 9. Citation
+## 9. Citation
 If you find our work useful, please consider citing
 ```
 ```
