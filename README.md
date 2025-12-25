@@ -36,7 +36,7 @@ Our processed domain datasets for domain generalization baselines are in ```./do
 
 ---
 ## 3. Dataset preparation
-Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets.
+Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets. We also provide the t-SNE data dirtibution analysis in ```t_sne.ipynb```.
 
 #### 3.1. Format preparation
 
