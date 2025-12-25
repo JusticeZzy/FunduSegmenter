@@ -95,7 +95,7 @@ Example visualization:
 </div>
 
 #### 3.2. OD centre cropping
-Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/abs/pii/S0169260721000444?casa_token=19OZFuiKaQsAAAAA:3qza9yDwFd8qhnzq_73CReq3HQ5rjWV6Xv5f_6MNsBJceS_72dyjsg_pXieKBss2iLLuWl7qQJg) weight from [here]()xxxxxxxxxxxxxxxxxxxxxxxxxxx. We pre-trained it on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. DUNet is one of the baseline models. You can train your own weight by following the step 4. Alternatively, you can use any other reliable pre-trained weights to apply OD centre cropping pre-processing.
+Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/abs/pii/S0169260721000444?casa_token=19OZFuiKaQsAAAAA:3qza9yDwFd8qhnzq_73CReq3HQ5rjWV6Xv5f_6MNsBJceS_72dyjsg_pXieKBss2iLLuWl7qQJg) weight from [here](https://pan.baidu.com/s/1CDa2_9VAVFVrl_cl-3xVAg?pwd=dbzu). We pre-trained it on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. DUNet is one of the baseline models. You can train your own weight by following the step 4. Alternatively, you can use any other reliable pre-trained weights to apply OD centre cropping pre-processing.
 
 Run ```OD_centrecrop.ipynb``` in ```offline_datasets_prepare``` to apply OD centre cropping pre-processing by the pre-trained DUNet.
 
@@ -110,7 +110,7 @@ python test_OD_centrecrop.py \
 
 ---
 ### 4. Train
-Run the following code to train our ```FunduSegmenter```. Set model_selection to ```baseline_RETFoundSegmenter```, ```baseline_DUNet```, ```baseline_TransUNet``` to train baselines (RETFoundSegmenter, DUNet, [TransUNet](https://github.com/Beckschen/TransUNet)) respectively. Note that we only copy the model architecture of TransUNet, and train it under our experimental pipeline. If you would like to reproduce results by running official code, click [here](https://github.com/Beckschen/TransUNet).
+Run the following code to train our ```FunduSegmenter```. Set ```--model_selection``` to ```baseline_RETFoundSegmenter```, ```baseline_DUNet```, ```baseline_TransUNet``` to train baselines (RETFoundSegmenter, DUNet, [TransUNet](https://github.com/Beckschen/TransUNet)) respectively. Note that we only copy the model architecture of TransUNet, and train it under our experimental pipeline. If you would like to reproduce results by running official code, click [here](https://github.com/Beckschen/TransUNet).
 ```
 python train.py \
   --epochs 10000 \
@@ -159,15 +159,34 @@ The output segmentation maps are saved in ```./results/segmentation_map```.
 
 ---
 ### 6. Evaluation only
-If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
+If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run test.py) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](https://pan.baidu.com/s/1-IcmzTP_i1gFqbYp4LPIeQ?pwd=r3ej).
 
-We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 to produce segmentation maps. The weight is available [here](). xxxxxxxxxxxxxxxxxxxxxxxxx 
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run test_nopadding.py) to produce segmentation maps. The weight is available [here](https://pan.baidu.com/s/1yNUSu9qD9qRoTUV7Z_zUuw?pwd=q8s8). Note that the performance of this weight is not widely verificated, so it could be unstable.
+
+Additionally, all the weights trained and reported in our paper are available [here](https://pan.baidu.com/s/1eqmo4ZS9673X4s2RCaTbsw?pwd=sbpw).
 
 ---
 ### 7. Baselines
 #### 7.1. DUNet and TransUNet
+You can implement DUNet and TransUNet by setting ```--model_selection``` to ```baseline_DUNet``` and ```baseline_TransUNet``` through ```train.py```. The official repository of TransUNet is [here](https://github.com/Beckschen/TransUNet).
+
+You need to download the pre-trained weight ```imagenet21k_R50+ViT-B_16.npz``` from the official repository of TransUNet if implementing it under our pipeline.
 
 #### 7.2. nnU-Net
+You can implement nnU-Net by following the official [repository](https://github.com/MIC-DKFZ/nnUNet). Note that we implemented nnU-Net V2 in our paper.
+
+We provide the required data converting files in ```./baselines_requirements/nnU-Net```. You can create your own code by following the official repository. We also provide the testing files in the folder to applying the metrics we used in our paper.
+
+There is one necessary change. In ```./training/nnUNetTrainer/nnUNetTrainer.py```, you need to replace the following
+```
+line 579    splits = generate_crossval_split(all_keys_sorted, seed=12345, n_splits=5)
+line 598    rnd = np.random.RandomState(seed=12345 + self.fold)
+```
+with
+```
+line 579    splits = generate_crossval_split(all_keys_sorted, seed=112316, n_splits=5)
+line 598    rnd = np.random.RandomState(seed=112316 + self.fold)
+```
 
 #### 7.3. DoFE
 You can implement DoFE by following the official [repository](https://github.com/emma-sjwang/Dofe).
@@ -188,7 +207,7 @@ There are some necessary changes.
    torch.cuda.manual_seed_all(112316)
    ```
 
-4. (Important!) The MobileNet part of DoFE load a pre-trained weight. However, the link of the weight is invalid. You need to download the same pre-trained weight from [here]() (xxxxxxxxxxxxxxxxxxxx) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
+4. (Important!) The MobileNet part of DoFE load a pre-trained weight. However, the link of the weight is invalid. You need to download the same pre-trained weight from [here](https://pan.baidu.com/s/1BFus-SFtT5fiXpOpn8ZHJQ?pwd=74md) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
 
 #### 7.4. RAM-DSIR
 You can implement RAM-DSIR by following the official [repository](https://github.com/zzzqzhou/RAM-DSIR).
@@ -240,6 +259,6 @@ Our work is benefited from [RETFound](https://github.com/rmaphoh/RETFound) and [
 
 ---
 ### 9. Citation
-If you find that our work is useful for your research, please consider citing
+If you find our work useful, please consider citing
 ```
 ```
