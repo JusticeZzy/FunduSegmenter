@@ -1,7 +1,7 @@
 """
 Adapted from Mookiah 'M R K, Hogg S, MacGillivray T, et al. On the quantitative effects of compression of retinal fundus images on morphometric vascular measurements in VAMPIRE[J]. Computer methods and programs in biomedicine, 2021, 202: 105969.'
 
-Implement by Zhenyi Zhao
+Implement by Zhenyi Zhao @Vampire,Computing,University of Dundee
 """
 
 
