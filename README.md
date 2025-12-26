@@ -104,7 +104,7 @@ Run ```OD_centrecrop.ipynb``` in ```offline_datasets_prepare``` to apply OD cent
 python test_OD_centrecrop.py \
   --test_image_path (your own image dir) \
   --test_mask_path (your own ground truth dir) \
-  --checkpoint_path ./DUNet_OD_centreCrop_pretrained.pth \
+  --checkpoint_path ./DUNet_OD_CentreCrop_pretrained.pth \
   --label_n_cls 3    # Important! 2 for OD only ground truth or 3 for OD/OC ground truth.
 ```
 
