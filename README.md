@@ -30,7 +30,7 @@ Download RETFound pre-trained weights ```RETFound_mae_natureCFP.pth``` from [RET
 
 Download datasets [IDRiD](https://www.mdpi.com/2306-5729/3/3/25), [Drishti-GS](https://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2015/Arunava2015AComprehensive.pdf), [RIM-ONE-r3](https://ieeexplore.ieee.org/abstract/document/5999143?casa_token=R9T_bTVvDoMAAAAA:r2ipTjpfnGSzeUuqMIHDOrxI_T3XEeG67yP_cWiiwD2c9Xsom2CTBSLZXVswBow7BRDI_95VOt3cYw), and [REFUGE](https://www.sciencedirect.com/science/article/abs/pii/S1361841519301100?casa_token=H1RvPw0rvRgAAAAA:XqD9RTnnyZ8dOg8Z9Wo54s16LRP-nxhfmhotHMMEugyYtt5hYQhHHcHkA18b0OnOhO7iSgJ2kmo).
 
-You can directly download the processed datasets from [here](https://pan.baidu.com/s/1Ca-0xXSBW38BL6Oc96EbvA?pwd=buwr) and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)
+You can directly download the processed datasets from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (Datasets.zip) and skip step 3. (Our private dataset [GoDARTS](https://academic.oup.com/ije/article/47/2/380/4107246) is not included.)
 
 Our processed domain datasets for domain generalization baselines are in ```./domain_datasets/baseline_set```, for our models are in ```./domain_datasets/FunduSegmenter_set```.
 
@@ -95,7 +95,7 @@ Example visualization:
 </div>
 
 #### 3.2. OD centre cropping
-Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/abs/pii/S0169260721000444?casa_token=19OZFuiKaQsAAAAA:3qza9yDwFd8qhnzq_73CReq3HQ5rjWV6Xv5f_6MNsBJceS_72dyjsg_pXieKBss2iLLuWl7qQJg) weight from [here](https://pan.baidu.com/s/1CDa2_9VAVFVrl_cl-3xVAg?pwd=dbzu). We pre-trained it on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. DUNet is one of the baseline models. You can train your own weight by following the step 4. Alternatively, you can use any other reliable pre-trained weights to apply OD centre cropping pre-processing.
+Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/abs/pii/S0169260721000444?casa_token=19OZFuiKaQsAAAAA:3qza9yDwFd8qhnzq_73CReq3HQ5rjWV6Xv5f_6MNsBJceS_72dyjsg_pXieKBss2iLLuWl7qQJg) weight from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (DUNet_OD_CentreCrop_pretrained.pth). We pre-trained it on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. DUNet is one of the baseline models. You can train your own weight by following the step 4. Alternatively, you can use any other reliable pre-trained weights to apply OD centre cropping pre-processing.
 
 Run ```OD_centrecrop.ipynb``` in ```offline_datasets_prepare``` to apply OD centre cropping pre-processing by the pre-trained DUNet.
 
@@ -143,7 +143,7 @@ python test.py  \
   --model_selection FunduSegmenter \
   --checkpoint_path ./results/saved_weights/best_weights.pth \
   --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation)
-  --is_idrid    # Important! Disable for other datasets, or enable for IDRiD, since IDRiD was cropped 1200×1200 ROIs.
+  --is_idrid    # Important! Disable for other datasets, or enable for IDRiD, since IDRiD was cropped to 1200×1200 ROIs.
 ```
 Run the following code to produce results if directly reconstructing maps (domain generalization task or training with original images):
 ```
@@ -159,11 +159,11 @@ The output segmentation maps are saved in ```./results/segmentation_map```.
 
 ---
 ## 6. Evaluation only
-If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run ```test.py```) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](https://pan.baidu.com/s/1-IcmzTP_i1gFqbYp4LPIeQ?pwd=r3ej).
+If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run ```test.py```) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_CroppedImage.pth).
 
-We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weight is available [here](https://pan.baidu.com/s/1yNUSu9qD9qRoTUV7Z_zUuw?pwd=q8s8). Note that the performance of this weight is not widely verificated, so it could be unstable.
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weight is available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_OriginalImage.pth). Note that the performance of this weight is not widely verificated, so it could be unstable.
 
-Additionally, all the weights trained and reported in our paper are available [here](https://pan.baidu.com/s/1uyjrC_j-Gk5IYsU0hA7hmg?pwd=nwny).
+Additionally, all the weights trained and reported in our paper are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (Weights.zip).
 
 ---
 ## 7. Baselines
@@ -207,7 +207,7 @@ There are some necessary changes.
    torch.cuda.manual_seed_all(112316)
    ```
 
-4. (Important!) The MobileNet part of DoFE load a pre-trained weight. However, the link of the weight is invalid. You need to download the same pre-trained weight from [here](https://pan.baidu.com/s/1BFus-SFtT5fiXpOpn8ZHJQ?pwd=74md) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
+4. (Important!) The MobileNet part of DoFE load a pre-trained weight. However, the link of the weight is invalid. You need to download the same pre-trained weight from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (mobilenet_v2-6a65762b.pth) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
 
 #### 7.4. RAM-DSIR
 You can implement RAM-DSIR by following the official [repository](https://github.com/zzzqzhou/RAM-DSIR).
