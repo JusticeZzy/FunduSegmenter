@@ -142,7 +142,7 @@ python test.py  \
   --image_size 256 \
   --model_selection FunduSegmenter \
   --checkpoint_path ./results/saved_weights/best_weights.pth \
-  --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation)
+  --output_channel (2 for OD only segmentation, 3 for OD/OC segmentation) \
   --is_idrid    # Important! Disable for other datasets, or enable for IDRiD, since IDRiD was cropped to 1200×1200 ROIs.
 ```
 Run the following code to produce results if directly reconstructing maps (domain generalization task or training with original images):
