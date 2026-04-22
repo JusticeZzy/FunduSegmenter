@@ -6,9 +6,17 @@
 
 
 
-
+Please contact zhenyi.zhao@hotmail.com or 2578745@dundee.ac.uk if you have any questions.
 
 Our code was verified on a single NVIDIA GeForce RTX 5090 GPU and AMD Ryzen 9 9950X CPU.
+
+<img width="3319" height="4121" alt="Figure 2 GitHub" src="https://github.com/user-attachments/assets/02e3c04a-6072-48f5-b72b-2aa3b30d022b" />
+
+Model architecture of FunduSegmenter. (a) Overall architecture. (b) The basic CNN block used in the model. (c) The architecture of the Pre-adapter. (d) The position of the ViT block adapter and its architecture.
+
+---
+## Important license note!
+Our code in this repository is under the **MIT License**. However, all the weights (including the original RETFound weights and our derived weights) are under **CC BY-NC 4.0** (Creative Commons Attribution-NonCommercial 4.0 International), as they are derived from RETFound. This means the weights are for **non-commercial use only**. Please see [RETFound](https://github.com/rmaphoh/RETFound) for details.
 
 ---
 ## 1. Installation
