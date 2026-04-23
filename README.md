@@ -1,10 +1,21 @@
 # FunduSegmenter
+This is the official PyTorch implementation of [FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images](). (link coming soon)
 
+---
 
+If you use our code and publish your work, please:
 
+1. include the following acknowledgment in any publication or website reporting your work:
 
+FunduSegmenter was created by Zhenyi Zhao of the University of Dundee, UK.
 
+2. Cite the following paper:
 
+< TVST (Translational Vision Science & Technology) reference coming soon>. 
+
+Temporary: Zhao Z, Mookiah M R K, Trucco E. FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images[J]. arXiv preprint arXiv:2508.11354, 2025.
+
+---
 
 Please contact zhenyi.zhao@hotmail.com or 2578745@dundee.ac.uk if you have any questions.
 
@@ -103,7 +114,7 @@ Example visualization:
 </div>
 
 #### 3.2. OD centre cropping
-Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/abs/pii/S0169260721000444?casa_token=19OZFuiKaQsAAAAA:3qza9yDwFd8qhnzq_73CReq3HQ5rjWV6Xv5f_6MNsBJceS_72dyjsg_pXieKBss2iLLuWl7qQJg) weight from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (DUNet_OD_CentreCrop_pretrained.pth). We pre-trained it on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. DUNet is one of the baseline models. You can train your own weight by following the step 4. Alternatively, you can use any other reliable pre-trained weights to apply OD centre cropping pre-processing.
+Download the pre-trained [DUNet](https://www.sciencedirect.com/science/article/abs/pii/S0169260721000444?casa_token=19OZFuiKaQsAAAAA:3qza9yDwFd8qhnzq_73CReq3HQ5rjWV6Xv5f_6MNsBJceS_72dyjsg_pXieKBss2iLLuWl7qQJg) weights from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (DUNet_OD_CentreCrop_pretrained.pth). We pre-trained it on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. DUNet is one of the baseline models. You can train your own weights by following the step 4. Alternatively, you can use any other reliable pre-trained weights to apply OD centre cropping pre-processing.
 
 Run ```OD_centrecrop.ipynb``` in ```offline_datasets_prepare``` to apply OD centre cropping pre-processing by the pre-trained DUNet.
 
@@ -167,9 +178,9 @@ The output segmentation maps are saved in ```./results/segmentation_map```.
 
 ---
 ## 6. Evaluation only
-If you would like to use our trained weight to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run ```test.py```) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weight is available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_CroppedImage.pth).
+If you would like to use our trained weights to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run ```test.py```) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weights are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_CroppedImage.pth).
 
-We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weight is available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_OriginalImage.pth). Note that the performance of this weight is not widely verificated, so it could be unstable.
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weights are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_OriginalImage.pth). Note that the performance of this weights is not widely verificated, so it could be unstable.
 
 Additionally, all the weights trained and reported in our paper are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (Weights.zip).
 
@@ -178,7 +189,7 @@ Additionally, all the weights trained and reported in our paper are available [h
 #### 7.1. DUNet and TransUNet
 You can implement DUNet and TransUNet by setting ```--model_selection``` to ```baseline_DUNet``` and ```baseline_TransUNet``` through ```train.py```. The official repository of TransUNet is [here](https://github.com/Beckschen/TransUNet).
 
-You need to download the pre-trained weight ```imagenet21k_R50+ViT-B_16.npz``` from the official repository of TransUNet if implementing it under our pipeline.
+You need to download the pre-trained weights ```imagenet21k_R50+ViT-B_16.npz``` from the official repository of TransUNet if implementing it under our pipeline.
 
 #### 7.2. nnU-Net
 You can implement nnU-Net by following the official [repository](https://github.com/MIC-DKFZ/nnUNet). Note that we implemented nnU-Net V2 in our paper.
@@ -215,7 +226,7 @@ There are some necessary changes.
    torch.cuda.manual_seed_all(112316)
    ```
 
-4. (Important!) The MobileNet part of DoFE load a pre-trained weight. However, the link of the weight is invalid. You need to download the same pre-trained weight from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (mobilenet_v2-6a65762b.pth) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
+4. (Important!) The MobileNet part of DoFE load the pre-trained weights. However, the link of the weights is invalid. You need to download the same pre-trained weights from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (mobilenet_v2-6a65762b.pth) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
 
 #### 7.4. RAM-DSIR
 You can implement RAM-DSIR by following the official [repository](https://github.com/zzzqzhou/RAM-DSIR).
@@ -267,6 +278,7 @@ Our work is benefited from [RETFound](https://github.com/rmaphoh/RETFound) and [
 
 ---
 ## 9. Citation
-If you find our work useful, please consider citing
+If you use our code, please cite
 ```
+TVST reference coming soon
 ```
