@@ -280,7 +280,7 @@ Our work benefits from [RETFound](https://github.com/rmaphoh/RETFound) and [Segm
 ## 9. Citation
 If you use our code, please cite
 ```
-@article{10.1167/tvst.15.5.14,
+@article{zhao2026fundusegmenter,
     author = {Zhao, Zhenyi and Mookiah, Muthu Rama Krishnan and Trucco, Emanuele},
     title = {FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images},
     journal = {Translational Vision Science & Technology},
