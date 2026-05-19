@@ -55,7 +55,7 @@ Our processed domain datasets for domain generalization baselines are in ```./do
 
 ---
 ## 3. Dataset preparation
-Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets. We also provide the t-SNE data dirtibution analysis in ```t_sne.ipynb```.
+Follow this step if you would like to use your own datasets. You may need to modify the related code to match your datasets. We also provide the t-SNE data distribution analysis in ```t_sne.ipynb```.
 
 #### 3.1. Format preparation
 
@@ -180,7 +180,7 @@ The output segmentation maps are saved in ```./results/segmentation_map```.
 ## 6. Evaluation only
 If you would like to use our trained weights to produce segmentation maps, you can follow the step 3 to pre-process your images, and then follow the step 5 (run ```test.py```) to produce segmentation maps. We provide a pre-trained FunduSegmenter which was trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. The weights are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_CroppedImage.pth).
 
-We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weights are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_OriginalImage.pth). Note that the performance of this weights is not widely verificated, so it could be unstable.
+We also provide a pre-trained FunduSegmenter using original images which was also trained on Drishti-GS, RIM-ONE-r3, REFUGE training, and REFUGE validation. You can directly use the original images (need to follow step 3.1 to convert the ground truth format) and follow the step 5 (run ```test_nopadding.py```) to produce segmentation maps. The weights are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (FunduSegmenter_OriginalImage.pth). Note that the performance of these weights is not widely verified, so it could be unstable.
 
 Additionally, all the weights trained and reported in our paper are available [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (Weights.zip).
 
@@ -194,7 +194,7 @@ You need to download the pre-trained weights ```imagenet21k_R50+ViT-B_16.npz``` 
 #### 7.2. nnU-Net
 You can implement nnU-Net by following the official [repository](https://github.com/MIC-DKFZ/nnUNet). Note that we implemented nnU-Net V2 in our paper.
 
-We provide the required data converting files in ```./baselines_requirements/nnU-Net```. You can create your own code by following the official repository. We also provide the testing files in the folder to applying the metrics we used in our paper.
+We provide the required data converting files in ```./baselines_requirements/nnU-Net```. You can create your own code by following the official repository. We also provide the testing files in the folder to apply the metrics we used in our paper.
 
 There is one necessary change. In ```./training/nnUNetTrainer/nnUNetTrainer.py```, you need to replace the following
 ```
@@ -226,7 +226,7 @@ There are some necessary changes.
    torch.cuda.manual_seed_all(112316)
    ```
 
-4. (Important!) The MobileNet part of DoFE load the pre-trained weights. However, the link of the weights is invalid. You need to download the same pre-trained weights from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (mobilenet_v2-6a65762b.pth) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
+4. (Important!) The MobileNet part of DoFE loads the pre-trained weights. However, the link of the weights is invalid. You need to download the same pre-trained weights from [here](https://huggingface.co/JusticeZzy/FunduSegmenter) (mobilenet_v2-6a65762b.pth) which is uploaded by us, and save it in ```./mobilenet_v2-6a65762b.pth```. In ```line 124``` of ```/networks/backbone/mobilenet.py```, replace ```pretrain_dict = model_zoo.load_url('http://jeff95.me/models/mobilenet_v2-6a65762b.pth')``` with ```pretrain_dict = torch.load('./mobilenet_v2-6a65762b.pth')```.
 
 #### 7.4. RAM-DSIR
 You can implement RAM-DSIR by following the official [repository](https://github.com/zzzqzhou/RAM-DSIR).
@@ -274,7 +274,7 @@ There are some necessary changes.
 
 ---
 ## 8. Acknowledgments
-Our work is benefited from [RETFound](https://github.com/rmaphoh/RETFound) and [Segmenter](https://github.com/rstrudel/segmenter). Thanks for their great work!
+Our work benefits from [RETFound](https://github.com/rmaphoh/RETFound) and [Segmenter](https://github.com/rstrudel/segmenter). Thanks for their great work!
 
 ---
 ## 9. Citation
