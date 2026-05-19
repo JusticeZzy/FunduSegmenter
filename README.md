@@ -1,5 +1,7 @@
 # FunduSegmenter
-This is the official PyTorch implementation of [FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images](). (link coming soon)
+This is the official PyTorch implementation of [FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images](https://doi.org/10.1167/tvst.15.5.14), the first adaptation of [RETFound](https://doi.org/10.1038/s41586-023-06555-x) for joint optic disc and optic cup segmentation in fundus images.
+
+Weights and processed datasets: [Hugging Face - JusticeZzy/FunduSegmenter](https://huggingface.co/JusticeZzy/FunduSegmenter).
 
 ---
 
@@ -11,9 +13,7 @@ FunduSegmenter was created by Zhenyi Zhao of the University of Dundee, UK.
 
 2. Cite the following paper:
 
-< TVST (Translational Vision Science & Technology) reference coming soon>. 
-
-Temporary: Zhao Z, Mookiah M R K, Trucco E. FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images[J]. arXiv preprint arXiv:2508.11354, 2025.
+Zhao, Z., Mookiah, M. R. K., & Trucco, E. (2026). FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images. _Translational Vision Science & Technology_, 15(5), 14-14. 
 
 ---
 
@@ -280,5 +280,14 @@ Our work is benefited from [RETFound](https://github.com/rmaphoh/RETFound) and [
 ## 9. Citation
 If you use our code, please cite
 ```
-TVST reference coming soon
+@article{10.1167/tvst.15.5.14,
+    author = {Zhao, Zhenyi and Mookiah, Muthu Rama Krishnan and Trucco, Emanuele},
+    title = {FunduSegmenter: Leveraging the RETFound Foundation Model for Joint Optic Disc and Optic Cup Segmentation in Retinal Fundus Images},
+    journal = {Translational Vision Science & Technology},
+    volume = {15},
+    number = {5},
+    pages = {14-14},
+    year = {2026},
+    month = {05}
+}
 ```
